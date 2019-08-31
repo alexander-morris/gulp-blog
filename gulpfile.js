@@ -14,36 +14,37 @@ const uglify = require('gulp-uglify');
 
 var config = require ("./config.json"); 
 
-gulp.task('build', function() {
-    gulp.src('README.md')
+gulp.task('static', function() {
+    gulp.src('/README.md')
         .pipe(markdown())
         .pipe(gulp.dest('docs'))	
   
 });
  
-gulp.task('hello', function() {
-  return console.log( 'Hello Alex', config.test );
+gulp.task('test', function() {
+  return console.log( 'test', config.test );
 });
 
-gulp.task('serve', serve({
-  root: ['docs'],
-  port: 8080,
-  middleware: function(req, res) {
-    // custom optional middleware
-  }
-}));
+// gulp.task('serve', serve({
+//   root: ['docs'],
+//   port: 8080,
+//   middleware: function(req, res) {
+//     // custom optional middleware
+//   }
+// }));
 
 gulp.task("watch", function () {
-	gulp.watch("README.md", gulp.series('build'))
+	gulp.watch("README.md", gulp.series('static'))
+	gulp.watch("src/javascript/*", gulp.series('js'))
 });
 
-gulp.task('browserSync', function() {
-  browserSync.init({
-    server: {
-      baseDir: 'docs'
-    },
-  })
-})
+// gulp.task('browserSync', function() {
+//   browserSync.init({
+//     server: {
+//       baseDir: 'docs'
+//     },
+//   })
+// })
 
 gulp.task('js', function () {
 
@@ -70,6 +71,16 @@ gulp.task('js', function () {
     // write sourcemaps
     .pipe(sourcemaps.write('./'))
 
-    .pipe(gulp.dest('dest'));
+    .pipe(gulp.dest('docs'));
 
 });
+
+// // Define the default task as a sequence of the above tasks
+// // Additionally, enable production build on any task by adding "--prod"
+// gulp.task('build', ['clean'], function() {
+//     gulp.start('extras', 'scripts', 'styles', 'images', 'templates', 'subDirectories', 'rename');
+// });
+
+// gulp.task('default', ['clean'], function() {
+//     gulp.start('extras', 'scripts', 'styles', 'images', 'templates', 'subDirectories',  'watch', 'open');
+// });

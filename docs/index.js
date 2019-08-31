@@ -13407,7 +13407,7 @@ var node = IPFS.create()
 init();
 
 function init () {
-	console.log('init ran: Hello World!')
+	console.log('init ran: Hello Alex!')
 }
 },{"ipfs":488}],69:[function(require,module,exports){
 /*globals self, window */

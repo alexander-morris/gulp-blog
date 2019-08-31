@@ -14,4 +14,4 @@ Github pages provides free hosting and HTTPS handling for static websites. Once 
 
 ## About Gulp
 
-Gulp uses Tasks to manage Globs of content. In this solution we will Watch directories for changes and rebuild the docs/ folder whenever changes are found. "gulp serve" can be used to watch, build, and serve these files on localhost:8080 TEST
+Gulp uses Tasks to manage Globs of content. In this solution we will Watch directories for changes and rebuild the docs/ folder whenever changes are found. "gulp serve" can be used to watch, build, and serve these files on localhost:8080
