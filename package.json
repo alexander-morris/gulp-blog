@@ -1,0 +1,29 @@
+{
+  "name": "gulp-blog",
+  "version": "1.0.0",
+  "description": "This simple template provides a framework for building a Github-Pages blog using NPM modules with an easy testing framework. Simply design your project in the src/ directory and watch it be built to the docs/ folder.",
+  "main": "gulpfile.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2",
+    "gulp-markdown": "^5.0.0",
+    "gulp-serve": "^1.4.0",
+    "terser-webpack-plugin": "^1.4.1"
+  },
+  "dependencies": {
+    "browserify": "^16.5.0",
+    "gulp-buffer": "0.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-tap": "^2.0.0",
+    "gulp-uglify": "^3.0.2",
+    "gulplog": "^1.0.0"
+  }
+}
