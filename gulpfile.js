@@ -1,18 +1,42 @@
 // gulpfile.js
 // This is where you can add new dependancies
 
-const gulp = require('gulp');
-const serve = require('gulp-serve');
-const markdown = require('gulp-markdown');
+const gulp        = require('gulp');
+const serve       = require('gulp-serve');
+const markdown    = require('gulp-markdown');
 const browserSync = require('browser-sync').create();
-const browserify = require('browserify');
-const log = require('gulplog');
-const tap = require('gulp-tap');
-const buffer = require('gulp-buffer');
-const sourcemaps = require('gulp-sourcemaps');
-const uglify = require('gulp-uglify');
+const browserify  = require('browserify');
+const log         = require('gulplog');
+const tap         = require('gulp-tap');
+const buffer      = require('gulp-buffer');
+const sourcemaps  = require('gulp-sourcemaps');
+const uglify      = require('gulp-uglify');
+const gutil       = require('gulp-util');
+const es          = require('event-stream');
 
-var config = require ("./config.json"); 
+const plugins = require('gulp-load-plugins')({
+    camelize: true
+});
+
+const config = require ("./config.json"); 
+
+var isProduction = (gutil.env.prod === true ? true : false);
+var date = new Date();
+var nicedate = date.toISOString().replace(/(\-|:|\.)/g, '');
+
+/* To-Do
+	1. Add event stream support
+	2. Fix watcher for static page build
+	3. Add templates for header / footer & script sections
+	4. Add template selection for header / footer sections
+	5. Reduce index.js size from 4MB to something more appropriate
+	
+*/
+
+gulp.task('clean', function() {
+    return gulp.src(config.basePaths.dest)
+        .pipe(plugins.clean());
+});
 
 gulp.task('static', function() {
     gulp.src('/README.md')
@@ -25,26 +49,10 @@ gulp.task('test', function() {
   return console.log( 'test', config.test );
 });
 
-// gulp.task('serve', serve({
-//   root: ['docs'],
-//   port: 8080,
-//   middleware: function(req, res) {
-//     // custom optional middleware
-//   }
-// }));
-
 gulp.task("watch", function () {
 	gulp.watch("README.md", gulp.series('static'))
 	gulp.watch("src/javascript/*", gulp.series('js'))
 });
-
-// gulp.task('browserSync', function() {
-//   browserSync.init({
-//     server: {
-//       baseDir: 'docs'
-//     },
-//   })
-// })
 
 gulp.task('js', function () {
 
@@ -74,6 +82,8 @@ gulp.task('js', function () {
     .pipe(gulp.dest('docs'));
 
 });
+
+
 
 // // Define the default task as a sequence of the above tasks
 // // Additionally, enable production build on any task by adding "--prod"
