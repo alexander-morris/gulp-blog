@@ -6,5 +6,5 @@ var node = IPFS.create()
 init();
 
 function init () {
-	console.log('init ran: Hello Alex!')
+	console.log('init ran: Hello World!')
 }

@@ -1,8 +1,10 @@
 {
 	"test" : "test",
-	"basePaths" : {
+	"SERVER_PORT" : 8080,
+	"basePaths"   : {
 		"dest" : "docs",
 		"src"  : "src", 
-		"js"   : "src/js"
+		"js"   : "src/js",
+		"components" : "src/components/"
 	}
 }

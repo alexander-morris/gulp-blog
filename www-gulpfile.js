@@ -31,11 +31,13 @@ gulp.task('templates', ['scripts', 'styles'], function() {
                 addRootSlash: true,
                 ignorePath: config.basePaths.dest
             }))
+    
         // .pipe(plugins.inject(
         //   gulp.src(config.typePaths.scriptshead.dest + config.GLOBSTAR, {read: false}, {starttag: '<!-- inject:head:{{ext}} -->'})
         //   .pipe(plugins.using({prefix: 'Injecting'})),
         //     { addRootSlash: false, ignorePath: config.basePaths.dest })
         // )
+
     .pipe(plugins.inject(
         gulp.src([config.typePaths.scripts.dest + config.GLOBSTAR], { read: false })
         .pipe(plugins.order(config.scriptOrder))

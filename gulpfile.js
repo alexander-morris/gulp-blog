@@ -14,7 +14,7 @@ const uglify      = require('gulp-uglify');
 const gutil       = require('gulp-util');
 const es          = require('event-stream');
 
-const plugins = require('gulp-load-plugins')({
+var plugins = require('gulp-load-plugins')({
     camelize: true
 });
 
@@ -26,11 +26,10 @@ var nicedate = date.toISOString().replace(/(\-|:|\.)/g, '');
 
 /* To-Do
 	1. Add event stream support
-	2. Fix watcher for static page build
 	3. Add templates for header / footer & script sections
 	4. Add template selection for header / footer sections
 	5. Reduce index.js size from 4MB to something more appropriate
-	
+	6. Fix clean function
 */
 
 // gulp.task('clean', function() {
@@ -39,34 +38,40 @@ var nicedate = date.toISOString().replace(/(\-|:|\.)/g, '');
 // });
 
 gulp.task('static', function() {
-	// return es.merge(
-	    gulp.src('./README.md')
-	        .pipe(markdown())
-	        .pipe(gulp.dest('docs'))	
-	    // )
-  
+	    return gulp.src('./src/pages/*.md')
+	        .pipe( markdown() )
+	        .pipe( gulp.dest('docs') )	
+  			.pipe( plugins.inject(
+	          gulp.src( config.basePaths.components, {read: false}) ) )
 });
  
 gulp.task('test', function() {
 
   	console.log( 'test', config.test )
-  	return null;
+  	return function () { return null }
   	
 });
 
 gulp.task("watch", function () {
-	gulp.watch("README.md", gulp.series('static'))
-	gulp.watch("src/javascript/*", gulp.series('js'))
+	// plugins.connect.server({
+ //        livereload: true,
+ //        port: config.SERVER_PORT,
+ //        root: config.basePaths.dest
+ //    });
+
+	gulp.watch( "src/pages/*", gulp.series('static') )
+	gulp.watch( "src/javascript/*", gulp.series('js') )
+
 });
 
 gulp.task('js', function () {
 
-  return gulp.src('src/javascript/*.js', {read: false}) // no need of reading file because browserify does.
+  return gulp.src( 'src/javascript/*.js', { read: false } ) // no need of reading file because browserify does.
 
     // transform file objects using gulp-tap plugin
-    .pipe(tap(function (file) {
+    .pipe( tap( function ( file ) {
 
-      log.info('bundling ' + file.path);
+      log.info( 'bundling ' + file.path );
 
       // replace file contents with browserify's bundle stream
       file.contents = browserify(file.path, {debug: true}).bundle();
@@ -74,24 +79,21 @@ gulp.task('js', function () {
     }))
 
     // transform streaming contents into buffer contents (because gulp-sourcemaps does not support streaming contents)
-    .pipe(buffer())
+    .pipe( buffer() )
 
     // load and init sourcemaps
-    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe( sourcemaps.init( { loadMaps: true} ) )
 
     // .pipe(uglify())
 
     // write sourcemaps
-    .pipe(sourcemaps.write('./'))
+    .pipe( sourcemaps.write( './' ) )
 
-    .pipe(gulp.dest('docs'));
+    .pipe( gulp.dest( config.basePaths.dest ) );
 
 });
 
-
-
-gulp.task('run', gulp.series('js', 'watch'))
-
+gulp.task('run', gulp.series('static', 'js', 'watch'))
 
 // // Define the default task as a sequence of the above tasks
 // // Additionally, enable production build on any task by adding "--prod"
