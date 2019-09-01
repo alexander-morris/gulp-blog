@@ -33,20 +33,25 @@ var nicedate = date.toISOString().replace(/(\-|:|\.)/g, '');
 	
 */
 
-gulp.task('clean', function() {
-    return gulp.src(config.basePaths.dest)
-        .pipe(plugins.clean());
-});
+// gulp.task('clean', function() {
+//     return gulp.src(config.basePaths.dest)
+//         .pipe(plugins.clean());
+// });
 
 gulp.task('static', function() {
-    gulp.src('/README.md')
-        .pipe(markdown())
-        .pipe(gulp.dest('docs'))	
+	// return es.merge(
+	    gulp.src('./README.md')
+	        .pipe(markdown())
+	        .pipe(gulp.dest('docs'))	
+	    // )
   
 });
  
 gulp.task('test', function() {
-  return console.log( 'test', config.test );
+
+  	console.log( 'test', config.test )
+  	return null;
+  	
 });
 
 gulp.task("watch", function () {
@@ -83,6 +88,9 @@ gulp.task('js', function () {
 
 });
 
+
+
+gulp.task('run', gulp.series('js', 'watch'))
 
 
 // // Define the default task as a sequence of the above tasks

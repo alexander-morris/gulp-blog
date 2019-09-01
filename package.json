@@ -15,6 +15,7 @@
     "browser-sync": "^2.26.7",
     "gulp": "^4.0.2",
     "gulp-markdown": "^5.0.0",
+    "gulp-sequence": "^1.0.0",
     "gulp-serve": "^1.4.0",
     "terser-webpack-plugin": "^1.4.1"
   },
