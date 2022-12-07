@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "ipfs": "^0.37.1",
-    "libp2p": "^0.26.1"
+    "libp2p": "^0.38.0"
   }
 }
